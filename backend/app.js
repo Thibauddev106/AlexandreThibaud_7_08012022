@@ -1,6 +1,13 @@
 const express = require("express");
-const app = express();
 
+
+// fichier routes
+const userRoutes = require("./routes/user.routes");
+const postRoutes = require("./routes/post.routes");
+const commentRoutes = require("./routes/comment.routes");
+const likeRoutes = require("./routes/likes.routes");
+
+const app = express();
 
 // CORS
 app.use((req, res, next) => {
@@ -13,20 +20,14 @@ app.use((req, res, next) => {
         "Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, PATCH, OPTIONS"
     );
-    res.setHeader("Acces-Control-Allow-Credentials", "true");
     next();
 });
 
-app.use(express.json());
-
-
-// fichier routes
-const userRoutes = require("./routes/user.routes");
-
 // routes
-app.use("/api/user", userRoutes);
-
-
+app.use("/api/auth", userRoutes);
+app.use("/api/auth", postRoutes);
+app.use("/api/auth", commentRoutes);
+app.use("/api/auth", likeRoutes);
 
 
 

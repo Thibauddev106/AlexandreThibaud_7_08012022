@@ -1,18 +1,18 @@
 const mysql = require("mysql");
+require("dotenv").config();
 
 // connexion mysql
-const db = mysql.createConnection({
+const connection = mysql.createConnection({
     host : "localhost",
     user: "root",
     password : "0226",
     database : "groupomania"
 });
 
-db.connect(function(err) {
-    if (err) throw err;
+connection.connect(error => {
+    if (error) throw error;
     console.log("Connecté à la base de données MySQL!");
   });
 
-module.exports.getDB = () => {
-    return db
-};
+module.exports = connection;
+
