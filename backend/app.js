@@ -1,5 +1,6 @@
 const express = require("express");
-
+const path = require("path");
+require("dotenv").config();
 
 // fichier routes
 const userRoutes = require("./routes/user.routes");
@@ -11,7 +12,7 @@ const app = express();
 
 // CORS
 app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
         "Acces-Control-Allow-Headers",
         "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
@@ -23,11 +24,13 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.json());
+
 // routes
-app.use("/api/auth", userRoutes);
-app.use("/api/auth", postRoutes);
-app.use("/api/auth", commentRoutes);
-app.use("/api/auth", likeRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
+//app.use("/api/auth", commentRoutes);
+//app.use("/api/auth", likeRoutes);
 
 
 

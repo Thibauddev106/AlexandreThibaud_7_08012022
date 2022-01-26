@@ -4,16 +4,16 @@ const passwordFormat = new passwordValidator();
 
 passwordFormat
 .is().min(8)
-.is().max(50)
-.has().uppercase(1)
-.has().lowercase(1)
-.has().digits(1)
+.is().max(100)
+.has().uppercase()
+.has().lowercase()
+.has().digits()
 .has().not().spaces()
 
-module.exports = (req, res) => {
-    if (passwordFormat.validate(req.body.password)) {
-        next();
-    } else {
+module.exports = (req, res, next) => {
+    if (!passwordFormat.validate(req.body.password)) {
         res.status(400).json({error: "un mot de passe fort est demandé !"});
+    } else {
+        next();
     }
 };

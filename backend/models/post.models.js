@@ -24,7 +24,7 @@ Article.create = (newArticle, result) => {
 
 // Effacer un article par son Id
 Article.deleteOne = (articleId) => {
-    return new promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         db.query(`DELETE FROM posts WHERE id=${articleId}`),
         function(err, result) {
             if (err) {
@@ -38,7 +38,7 @@ Article.deleteOne = (articleId) => {
 
 // Modification d'un article ok
 Article.updateOne = (articleId, article) => {
-    return new promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         db.query(
             `UPDATE posts SET  body="${article.body}", image="${article.image}", WHERE id="${articleId}`,
             function(err, result) {
@@ -68,7 +68,7 @@ Article.findAll = (result) => {
 
 // Chercher un article par son id ok
 Article.findone = (articleId) => {
-    return new promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         db.query(
             `SELECT a.id AS articleId, a.user_id AS user_id, a.title AS title, a.body AS body, a.image AS image, a.date_creation AS date_creation, 
             SUM(l.likes) AS likeCount FROM posts a, likes l WHERE a.id=${articleId} AND l.article_id = a.id`,

@@ -5,7 +5,7 @@ const postCtrl = require("../controllers/post.controller");
 const auth = require("../middlewares/auth.middleware");
 
 // Création d'un article
-router.post("/createArticle/", auth, postCtrl.createArticle);
+router.post("/createArticle/", postCtrl.createArticle);
 
 // Suppression d'un article
 router.delete("/article/delete/:articleId", auth, postCtrl.deleteArticle);

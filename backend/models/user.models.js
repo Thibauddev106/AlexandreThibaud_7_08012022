@@ -41,16 +41,16 @@ User.deleteOne = (userId) => {
     })
 };
 
-// Trouver un utilisateur par son id 
-User.findOne = (userId) => {
-    return new Promise((resolve, reject) => {
+//Trouver un user par son id (rôle admmin) 
+User.findById = (userId) => {
+    return new Promise((resolve, reject)=> {
         db.query(
-            `SELECT FROM users WHERE id=${userId}`,
-            function(err, result) {
-                if (err) {
-                    reject (err);
+            `SELECT * FROM users WHERE id=${userId}`,
+            function (error, result) {
+                if (error) {
+                    reject(error);
                 } else {
-                    resolve (result);
+                    resolve(result);
                 }
             }
         )
@@ -70,11 +70,23 @@ User.findOne = (email, result) => {
     });
 };
 
+//Trouver tous les utilisateurs (admin)
+User.findAll = (result) => {
+    db.query("SELECT * FROM users", (err, res) => {
+        if (err) {
+            result(err, null);
+            return;
+        } else {
+            result(null, res);
+        }
+    });
+};
+
 // Mettre à jour les données d'un utilisateur
 User.updateOne = (userId, user) => {
     return new Promise((resolve, reject) => {
         db.query(
-            `UPDATE users SET pseudo="${user.pseudo}", email="${user.email}", image="${user.image}", is_admin="${user.isAdmin}" WHERE id=${userId}`,
+            `UPDATE users SET pseudo="${user.pseudo}", email="${user.email}", image="${user.image}", is_admin="${user.is_admin}" WHERE id=${userId}`,
             function(err, result) {
                 if (err) {
                     reject(err);

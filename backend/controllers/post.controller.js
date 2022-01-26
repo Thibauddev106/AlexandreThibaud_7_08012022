@@ -29,10 +29,10 @@ exports.createArticle = (req, res) => {
 };
 
 // Supprimer un article
-exports.deleteArticle = (req, res, next) => {
+exports.deleteArticle = (req, res) => {
     Article.deleteOne(req.params.articleId)
     .then(article => res.status(200).json(article))
-    .catch(err => res.status(404).json({ error }));
+    .catch(error => res.status(404).json({ error }));
 };
 
 // Modifier un article
