@@ -3,9 +3,10 @@ const mysql = require("mysql");
 
 // Constructeur
 const Comment = function(comment) {
-    this.body = comment.body,
+    this.comment = comment.comment,
     this.user_id = comment.user_id,
-    this.post_id = comment.post_id
+    this.post_id = comment.post_id,
+    this.date_creation = comment.date_creation
 };
 
 // Création d'un commentaire
@@ -26,7 +27,7 @@ Comment.create = (newComment, result) => {
 Comment.findAll = (articleId) => {
     return new Promise((resolve, reject) => {
         db.query(
-            `SELECT * FROM comments WHERE post_id = ${articleId}`,
+            `SELECT * FROM comments WHERE post_id=${articleId}`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -39,10 +40,10 @@ Comment.findAll = (articleId) => {
 };
 
 // Modifier un commentaire 
-Comment.updateOne = (commentId) => {
+Comment.updateOne = (commentId, comment) => {
     return new Promise((resolve, reject) => {
         db.query(
-            `UPDATE comments SET body=${body} WHERE id=${commentId}`,
+            `UPDATE comments SET comment=${comment} WHERE id=${commentId}`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -55,10 +56,10 @@ Comment.updateOne = (commentId) => {
 };
 
 // Effacer un commentaire avec son id 
-Comment.deleteOneComment = (commentId) => {
+Comment.deleteOneId = (commentId) => {
     return new Promise((resolve, reject) => {
         db.query(
-            `DELETE comments WHERE id=${commentId}`,
+            `DELETE FROM comments WHERE id=${commentId}`,
             function(err, result) {
                 if (err) {
                     reject(err);

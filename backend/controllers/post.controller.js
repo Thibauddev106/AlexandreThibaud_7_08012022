@@ -3,7 +3,7 @@ const mysql = require("mysql");
 
 
 // Créer et sauver un article
-exports.createArticle = (req, res) => {
+exports.createArticle = (req, res, next) => {
     // Validation de requete
     if (!req.body) {
         res.status(400).send({
@@ -12,7 +12,7 @@ exports.createArticle = (req, res) => {
     }
     // Création d'un article
     const article = new Article({
-        message: req.body.message,
+        comment: req.body.comment,
         image: req.body.image,
         date_creation: req.body.date_creation,
         user_id: req.body.user_id
@@ -38,7 +38,7 @@ exports.deleteArticle = (req, res) => {
 // Modifier un article
 exports.modifyArticle = (req, res) => {
     let article = req.body;
-    let articleId = req.params.id;
+    let articleId = req.params.articleId;
     Article.updateOne(articleId, article)
     .then(() => res.status(200).json({ message: "Article modifié !"}))
     .catch(error => res.status(404).json({ error }));
@@ -56,9 +56,9 @@ exports.getArticles = (req, res) => {
     })
 };
 
-// Récupérer un article à partir de son id
+// Récupérer un article à partir de son id 
 exports.getOneArticle = (req, res) => {
-    Article.findone(req.params.id)
+    Article.findOne(req.params.id)
     .then(article => res.status(200).json(article))
     .catch(error => res.status(404).json({ error}));
 };

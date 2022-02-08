@@ -59,16 +59,6 @@ exports.login = (req, res) => {
     });
 };
 
-// Vérification token login
-exports.getMyDatas = (req, res) => {
-    let token = req.headers.authorization.split(" ")[1];
-    let decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    let id = JSON.parse(decodedToken.id);
-    User.findById(id)
-    .then(user => res.status(200).json(user))
-    .catch(error => res.status(404).json({ error }));
-};
-
 // Déconnexion de l'utilisateur
 exports.logout = (req, res) => {
     console.log(req.body);
@@ -100,8 +90,10 @@ exports.getAllUsers = (req, res) => {
             res.status(500).send({
                 message: err.message || "Des erreurs se sont produites",
             });
+            console.log("Pas d'utilisateur");
         }
         res.send(data);
+        console.log("ik")
     });
 };
 

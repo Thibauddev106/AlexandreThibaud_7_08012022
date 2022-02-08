@@ -49,8 +49,10 @@ User.findById = (userId) => {
             function (error, result) {
                 if (error) {
                     reject(error);
+                    console.log("error")
                 } else {
                     resolve(result);
+                    console.log("result")
                 }
             }
         )
@@ -72,11 +74,13 @@ User.findOne = (email, result) => {
 
 //Trouver tous les utilisateurs (admin)
 User.findAll = (result) => {
-    db.query("SELECT * FROM users", (err, res) => {
+    db.query(
+        "SELECT * FROM users", (err, res) => {
         if (err) {
             result(err, null);
             return;
         } else {
+            console.log("abc", res)
             result(null, res);
         }
     });

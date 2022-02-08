@@ -6,7 +6,7 @@ require("dotenv").config();
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
-const likeRoutes = require("./routes/likes.routes");
+const likeRoutes = require("./routes/like.routes");
 
 const app = express();
 
@@ -29,8 +29,8 @@ app.use(express.json());
 // routes
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
-//app.use("/api/auth", commentRoutes);
-//app.use("/api/auth", likeRoutes);
+app.use("/api/comment", commentRoutes);
+app.use("/api/likes", likeRoutes);
 
 
 
