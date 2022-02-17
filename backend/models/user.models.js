@@ -52,7 +52,7 @@ User.findById = (userId) => {
                     console.log("error")
                 } else {
                     resolve(result);
-                    console.log("result")
+                    
                 }
             }
         )
