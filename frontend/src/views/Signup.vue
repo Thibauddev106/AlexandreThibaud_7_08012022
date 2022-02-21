@@ -58,12 +58,12 @@ export default {
     sendSignup() {
       const regexPassword = /^[A-Za-z0-9]\w{8,}$/;
       const regexEmail = /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
-      
+      const regexPseudo = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
       if (
         (this.dataSignup.email !== null ||
         this.dataSignup.pseudo !== null ||
         this.dataSignup.password !== null) &&
-        (regexPassword.test(this.dataSignup.password) && regexEmail.test(this.dataSignup.email))
+        (regexPassword.test(this.dataSignup.password) && regexEmail.test(this.dataSignup.email) && regexPseudo.test(this.dataSignup.pseudo))
       ) {
         axios
           .post("http://localhost:5000/api/user/register", this.dataSignup)

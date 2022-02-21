@@ -43,6 +43,7 @@ exports.login = (req, res) => {
             console.log(isValid);
             const payload = {
                 id: data.id,
+                email: data.email,
                 pseudo: data.pseudo,
                 is_admin: data.is_admin,
             }

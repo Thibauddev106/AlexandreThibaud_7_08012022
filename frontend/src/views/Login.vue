@@ -15,7 +15,7 @@
       <div class="block-demi-container p-3">
         <div class="form-group">
           <label for="inputEmail">Email</label>
-          <input type="text" class="form-control" id="inputEmail" v-model="dataLogin.email" />
+          <input type="text" class="form-control" id="inputEmail" v-model="email" />
         </div>
         <div class="form-group">
           <label for="inputPassword">Mot de passe</label>
@@ -23,7 +23,7 @@
             type="password"
             class="form-control"
             id="inputPassword"
-            v-model="dataLogin.password"
+            v-model="password"
           />
         </div>
         <button @click.prevent="logIn" type="submit" class="btn btn-primary">Envoyer</button>
@@ -34,33 +34,33 @@
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "SignUp",
   data() {
     return {
-      dataLogin: {
         email: null,
-        password: null
-      },
-      msg: ""
+        password: null,
     };
   },
   computed: {
     ...mapState(["user"])
   },
   methods: {
+    ...mapMutations(["saveUserInfos"]),
     logIn() {
       if (
-        
-        this.dataLogin.email !== null ||
-        this.dataLogin.password !== null
+        this.email !== null ||
+        this.password !== null
       ) {
         axios
-          .post("http://localhost:5000/api/user/login", this.dataLogin)
+          .post("http://localhost:5000/api/user/login", {
+            email: this.email,
+            password: this.password
+          })
           .then(response => {
-            localStorage.setItem('token',response.data.token)
-            location.replace(location.origin)
+            this.saveUserInfos(response.data) 
+            this.$router.push('/me')
           })
           .catch(error => console.log(error));
       } else {

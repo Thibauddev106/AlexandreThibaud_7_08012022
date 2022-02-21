@@ -15,12 +15,13 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    saveUserInfos(state, [pseudo, id, email, is_admin]) {
-        state.user.pseudo = pseudo,
-        state.user.id = id,
-        state.user.email = email,
-        state.user.token = localStorage.getItem('token'),
-        state.user.is_admin = is_admin
+    saveUserInfos(state, data) {
+      state.user.pseudo = data.pseudo;
+      state.user.email = data.email;
+      state.user.id = data.id;
+      state.user.token = data.token;
+      state.user.is_admin = data.is_admin;
+      localStorage.setItem('token',data.token)
     },
   },
   actions: {
@@ -31,9 +32,7 @@ export default new Vuex.Store({
             Authorization: "Bearer " + localStorage.getItem("token")
           }
         })
-
         .then(response => {
-          
           context.commit('saveUserInfos',[response.data.pseudo, response.data.id, response.data.email, response.data.is_admin])
         })
         .catch(error => {
