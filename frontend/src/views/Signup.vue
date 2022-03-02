@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     sendSignup() {
-      const regexPassword = /^[A-Za-z0-9]\w{8,}$/;
+      const regexPassword = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
       const regexEmail = /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
       const regexPseudo = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
       if (

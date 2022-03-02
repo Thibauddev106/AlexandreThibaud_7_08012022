@@ -24,7 +24,7 @@
           <router-link class="nav-link" to="/signup">S'inscrire</router-link>
         </li>
         <li class="nav-item" v-if="user.token==null">
-          <router-link class="nav-link" to="/login">Se connecter</router-link>
+          <router-link class="nav-link" to="/login" @click="replier">Se connecter</router-link>
         </li>
         <li class="nav-item" v-if="user.token!==null">
           <router-link class="nav-link" to="/user">
@@ -41,6 +41,7 @@
 
 <script>
 import { mapState } from "vuex";
+
 export default {
   computed: {
     ...mapState(["user"])
@@ -48,6 +49,9 @@ export default {
   methods: {
     disconnect() {
       localStorage.clear();
+      location.replace(location.origin);
+    },
+    replier() {
       location.replace(location.origin);
     }
   }

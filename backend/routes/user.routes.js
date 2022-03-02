@@ -12,7 +12,7 @@ router.post("/register", validatePassword, userCtrl.register);
 router.post("/login", userCtrl.login);
 
 // Connection de l'utilisateur en cours de login pour vérifier la validité du token et récupérer ses données
-router.get('/me', auth, userCtrl.getMyDatas);
+router.get('/me',auth, userCtrl.getMyDatas);
 
 // Déconnexion de l'utilisateur ok
 router.post("/logout", auth, userCtrl.logout);

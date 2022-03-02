@@ -60,7 +60,10 @@ export default {
           })
           .then(response => {
             this.saveUserInfos(response.data) 
-            this.$router.push('/me')
+            this.$router.push('/')
+            // localStorage.setItem('token',response.data.token)
+            // location.replace(location.origin)
+            console.log(response)
           })
           .catch(error => console.log(error));
       } else {

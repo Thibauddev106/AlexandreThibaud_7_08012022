@@ -1,23 +1,24 @@
 <template>
   <div id="wall" class="wall">
     <CreatePost />
-    
-    
+    <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" @infosPost="setInfos" />
+    <ModalBoxModerate :post="post" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import CreatePost from "../components/CreatePost.vue";
 
+import CreatePost from "../components/CreatePost.vue";
+import Post from "../components/Post.vue";
+import ModalBoxModerate from "../components/ModifPost.vue";
 
 export default {
   name: "Home",
   components: {
     CreatePost,
-    
-    
-    
+    Post,
+    ModalBoxModerate
   },
   data() {
     return {
@@ -26,33 +27,31 @@ export default {
         comment: "",
         image: ""
       },
-      
       allPosts: []
-      
     };
   },
-  
-  
+  methods: {
+    setInfos(payload) {
+      this.post = payload.post;
+    }
+  },
   mounted() {
     axios
-      .get("http://localhost:5000/api/post/articles", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token")
-          //aller chercher token avec this dans le store
-        }
+        .get("http://localhost:5000/api/post/articles", {
+          headers: {
+            Authorization: "Bearer " + this.$store.state.user.token
+          }
+        })
+        .then(response => {
+          console.log("post", response.data);
+          this.allPosts = response.data.articles;
+        })
+        .catch(error => {
+          console.log(error); 
       })
-      
-      .then(response => {
-        
-        this.allPosts = response.data;
-      })
-      .catch(error => {
-        console.log(error); 
-      }),
-      
-      this.$store.dispatch("getUserInfos");
   }
 };
+
 </script>
 
 <style lang="scss">
