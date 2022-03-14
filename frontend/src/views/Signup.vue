@@ -46,7 +46,8 @@ export default {
       dataSignup: {
         email: null,
         password: null,
-        pseudo:null
+        pseudo:null,
+        is_admin:null
       },
       
     };

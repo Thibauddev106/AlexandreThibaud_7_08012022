@@ -65,7 +65,7 @@
                         type="password"
                         class="form-control"
                         id="InputNewPassword"
-                        v-model="changePwd.newPassword"
+                        v-model="changePwd.password"
                       />
                       <small
                         id="emailHelp"
@@ -78,7 +78,7 @@
                         type="password"
                         class="form-control"
                         id="RepeatInputNewPassword"
-                        v-model="changePwd.RepeatNewPassword"
+                        v-model="changePwd.RepeatPassword"
                       />
                     </div>
                   </form>
@@ -113,9 +113,14 @@ export default {
     return {
       retourAPI: "",
       changePwd: {
-        newPassword: null,
-        RepeatNewPassword: null
-      }
+        password: null,
+        RepeatPassword: null},
+      
+      pseudo: this.$store.state.user.pseudo,
+      email: this.$store.state.user.email,
+      image: this.$store.state.user.image,
+      is_admin: this.$store.state.user.is_admin,
+      
     };
   },
   computed: {
@@ -140,15 +145,21 @@ export default {
       //Controle de la saisie du nouveau password
       //Controle de repeat et non null
       if (
-        this.changePwd.newPassword == this.changePwd.RepeatNewPassword &&
-        this.changePwd.newPassword != "" &&
-        this.changePwd.RepeatNewPassword != ""
+        this.changePwd.password == this.changePwd.RepeatPassword &&
+        this.changePwd.password != "" &&
+        this.changePwd.RepeatPassword != ""
       ) {
         axios
           .put(
             `http://localhost:5000/api/user/update/${this.$store.state.user.id}`,
             {
-              newPassword: this.changePwd.newPassword
+              password: this.changePwd.password,
+              pseudo: this.pseudo,
+              email: this.email,
+              image: this.image,
+              is_admin: this.is_admin,
+              token: this.token
+              
             },
             {
               headers: {

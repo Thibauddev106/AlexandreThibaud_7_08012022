@@ -14,7 +14,7 @@ exports.register = (req, res) => {
             email: req.body.email,
             image: req.body.image,
             password: hash,
-            is_admin: 0
+            is_admin: req.body.is_admin
         })
         console.log(user);
         User.create(user, (err,data) => {
@@ -77,15 +77,25 @@ exports.logout = (req, res) => {
     res.status(200).json({ message: "ok"});  
 };
 
-// Modification des données utilisateur
+//Modification des données utilisateur
 exports.updateUser = (req, res) => {
-    let user = (req.body);
-    let userId = req.params.userId;
+    newPassword = bcrypt.hash(req.body.password, 10)
+    .then(newPassword => {
+        const user = new User({
+            pseudo: req.body.pseudo,
+            email: req.body.email,
+            image: req.body.image,
+            password: newPassword,
+            is_admin: req.body.is_admin
+        })
     
+    let userId = req.params.userId;
+    console.log(user)
     User.updateOne(userId, user)
     .then(() => res.status(200).json({ message: "Utilisateur modifié !"}))
     .catch(error => res.status(404).json({ error }));
-};
+});
+}
 
 
 // Trouver utilisateur par son id

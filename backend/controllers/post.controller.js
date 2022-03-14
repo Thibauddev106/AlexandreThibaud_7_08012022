@@ -1,22 +1,26 @@
 const Article = require("../models/post.models");
 const mysql = require("mysql");
+//const fs = require("fs");
 
 
 // Créer et sauver un article
 exports.createArticle = (req, res, next) => {
-    // Validation de requete
+   // Validation de requete
     if (!req.body) {
         res.status(400).send({
             message: "Le contenu ne peut pas être vide !",
         });
     }
+    console.log(req.body)
+    console.log(req.file)
     // Création d'un article
     const article = new Article({
         comment: req.body.comment,
-        image: req.body.image,
-        date_creation: req.body.date_creation,
-        user_id: req.body.user_id
+         image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+        //date_creation: req.body.date_creation,
+         user_id: req.body.user_id
     });
+    console.log(article)
     // enregistrer dans la DB
     Article.create(article, (err, data) => {
         if (err) {
@@ -27,6 +31,30 @@ exports.createArticle = (req, res, next) => {
         res.send(data);
     });
 };
+
+
+// exports.createArticle = (req, res, next) => {
+//     const articleObject = req.body.article;
+//     // on supprime le faux _id envoyé par le frontend
+//     //delete articleObject.id;
+//     // on crée une instance du modele sauce avec toutes les informations
+//     const article = new Article({
+//         ...articleObject,
+//         // on complète l'URL de l'image
+//         image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+        
+//     });
+//     // enregistrer dans la DB
+//     Article.create(article, (err, data) => {
+//         if (err) {
+//             res.status(500).send({
+//                 message: err.message || "Des erreurs se sont produites !",
+//             });
+//         }
+//         res.send(data);
+//     })
+// }       
+
 
 // Supprimer un article
 exports.deleteArticle = (req, res) => {

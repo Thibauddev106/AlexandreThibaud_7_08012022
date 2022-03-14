@@ -3,15 +3,16 @@ const router = express.Router();
 
 const postCtrl = require("../controllers/post.controller");
 const auth = require("../middlewares/auth.middleware");
+const multer = require('../middlewares/multer-config');
 
 // Création d'un article ok
-router.post("/createArticle", auth, postCtrl.createArticle);
+router.post("/createArticle", auth, multer, postCtrl.createArticle);
 
 // Suppression d'un article ok
 router.delete("/article/delete/:articleId", auth, postCtrl.deleteArticle);
 
 // Modification d'un article ok
-router.put("/article/update/:articleId",auth, postCtrl.modifyArticle);
+router.put("/article/update/:articleId", auth, postCtrl.modifyArticle);
 
 // Récupérer tous les articles ok
 router.get("/articles", auth, postCtrl.getArticles);

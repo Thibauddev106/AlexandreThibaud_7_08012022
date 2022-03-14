@@ -5,7 +5,7 @@ const commentCtrl = require("../controllers/comment.controller")
 const auth = require("../middlewares/auth.middleware");
 
 // Créer un nouveau commentaire ok
-router.post("/createComment/", auth, commentCtrl.createComment);
+router.post("/createComment", auth, commentCtrl.createComment);
 
 // Récupérer tous les commentaires d'un article ok
 router.get("/comments/article/:post_id", auth, commentCtrl.findAllComments);

@@ -1,11 +1,10 @@
 const db = require("../config/db");
 const mysql = require("mysql");
 
-console.log("bonjour")
+
 // Liker et unlike 
-exports.reacting = (req, res) => {
-  console.log("hello")
-  /*const { userId, postId } = req.body;
+exports.likeUnlikePost = (req, res) => {
+  const { userId, postId } = req.body;
   db.query(
     `SELECT * FROM likes WHERE user_id = ${userId} AND post_id = ${postId}`,
     (err, result) => {
@@ -37,12 +36,12 @@ exports.reacting = (req, res) => {
           res.status(200).json(result);
         });
       }
-    });*/
+    });
 }
 
-/*exports.postLikedByUser = (req, res) => {
+exports.postLikedByUser = (req, res) => {
   const { userId, postId } = req.body;
-  db.query(s`SELECT post_id, user_id FROM likes WHERE user_id = ${userId} AND post_id = ${postId}`,
+  db.query(`SELECT post_id, user_id FROM likes WHERE user_id = ${userId} AND post_id = ${postId}`,
    (err, result) => {
     if (err) {
       res.status(404).json({ err });
@@ -62,4 +61,4 @@ exports.countLikes = (req, res) => {
     }
     res.status(200).json(result);
   });
-};*/
+};

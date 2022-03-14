@@ -12,7 +12,7 @@
           </div>
           <div class="custom-file">
             <input
-              name="inputFile"
+              name="image"
               type="file"
               class="custom-file-input"
               id="inputFile"
@@ -34,30 +34,31 @@
 import axios from "axios";
 import { mapState } from "vuex";
 
+
 export default {
   name: "CreatePost",
   data() {
     return {  
       comment:"",
-      image:null,
-      date_creation:"12/12/12",
-      user_id:0,
+      image:"",
+      date_creation:"",
+      user_id:"",
       
       msgError: ""
     };
   },
   computed: {
-    ...mapState(["user", "editOption"])
+    ...mapState(["user", "editOption"]),
   },
   methods: {
     createPost() {  
+      let payload = new FormData();
+      payload.append("comment", this.comment)
+      payload.append("image", this.image)
+      payload.append("date_creation", this.date_creation)
+      payload.append("user_id", this.$store.state.user.id)
       axios
-        .post("http://localhost:5000/api/post/createArticle",  
-          {
-          comment: this.comment,
-          image: this.image,
-          date_creation: this.date_creation,
-          user_id: this.user_id},
+        .post("http://localhost:5000/api/post/createArticle", payload,
           {
           headers: {
             Authorization: "Bearer "+ this.$store.state.user.token
@@ -71,13 +72,12 @@ export default {
           }
         })
         .catch(error => (this.msgError = error)); 
-    },
-  
-  onFileChange(e) {
-      console.log(e);
-      this.image = e.target.files[0] || e.dataTransfer.files;
-      console.log(this.image);
-    }
+    }, 
+    onFileChange(e) {
+        console.log(e);
+        this.image = e.target.files[0] || e.dataTransfer.files;
+        console.log(this.image);
+      }
   }  
 };
 </script>

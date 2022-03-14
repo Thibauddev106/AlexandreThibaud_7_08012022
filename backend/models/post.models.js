@@ -5,7 +5,7 @@ const mysql = require("mysql");
 const Article = function(article) {
     this.comment = article.comment,
     this.image = article.image,
-    this.date_creation = article.date_creation,
+    // this.date_creation = article.date_creation,
     this.user_id = article.user_id
 };
 
@@ -57,7 +57,7 @@ Article.updateOne = (articleId, article) => {
 // Chercher tous les articles ok
 Article.findAll = (result) => {
     db.query(
-        "SELECT * FROM posts", (err, res) => {
+        "SELECT posts.id, posts.comment, posts.image, users.pseudo, posts.date_creation FROM posts JOIN users ON users.id=posts.user_id ORDER BY posts.date_creation DESC", (err, res) => {
             if (err) {
                 result(err, null);
                 return;
