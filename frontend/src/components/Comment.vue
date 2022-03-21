@@ -1,60 +1,59 @@
 <template>
-<div class="block-post">
-      <h3>Commenter la publication</h3>
-      <form enctype="multipart/form-data" action="/createComment" method="post">
-        <div class="input-group mb-3">
-          <input v-model="comment" class="input-text" id="input_text" type="text" />
+    <div class="card-body">
+        cc
+        <div class="card-header d-flex justify-content-between">
+            <div>Publier par <em class="text-secondary">{{$store.state.user.pseudo}}</em> le <em class="text-secondary">{{ }}</em> </div>
+        </div> 
+        <div class="card-text" v-for="com in allComments" v-bind:key="com.id" :com="com" @infosComment="setInfosCom">
+            <p class="mb-0">{{com.comment}}</p>
         </div>
-        <input type="submit" class="btn btn-primary" @click.prevent="createComment" value="Publier" />
-        <div class="card-text" v-if="comment!=='null'">
-        <p class="mb-0">{{comment}}</p>
-      </div>
-      </form>
-</div>
-
+          
+    </div>
 </template>
 
 <script>
 import axios from "axios";
 import { mapState } from "vuex";
 
-export default ({
+export default {
     name: "Comment",
+    props: [
+        'postId'
+    ],
     data() {
-        return {
-            comment:"",
-            date_creation:"",
-            user_id:"",
-            post_id:""
-        };
-    },
+    return {
+       com: {
+        id: "",
+        comment: "",
+        date_creation: "",
+        user_id: "",
+        },
+        allComments: [], 
+    }
+  },
     computed: {
-        ...mapState(["user", "editOption"]),
+        ...mapState(["user"])
     },
-    methods: {
-        createComment() {  
+    mounted() {
         axios
-            .post("http://localhost:5000/api/comment/createComment",  
-            {
-            comment: this.comment,
-            post_id: this.post_id,
-            date_creation: this.date_creation,
-            user_id: this.$store.state.user.id
-            },
-            {
-            headers: {
-                Authorization: "Bearer "+ this.$store.state.user.token
+            .get(`http://localhost:5000/api/comment/comments/article/${this.postId}`, {
+                headers: {
+                Authorization: "Bearer " + this.$store.state.user.token
             }
             })
             .then(response => {
-            //Si retour positif de l'API reload de la page pour affichage du dernier post
-            if (response) {
-                console.log(response)
-                window.location.reload();
-            }
+                console.log("com",response.data);
+                this.allComments = response.data;
             })
-            .catch(error => (this.msgError = error)); 
+            .catch(error => {
+            console.log(error); 
+            })
         },
-    } 
-})
+    methods: {
+         setInfosCom(payload) {
+            this.com = payload.com;
+        },
+        
+    },
+};
 </script>

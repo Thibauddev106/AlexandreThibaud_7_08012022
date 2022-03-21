@@ -55,6 +55,7 @@ export default {
       let payload = new FormData();
       payload.append("comment", this.comment)
       payload.append("image", this.image)
+      //this.image.name
       payload.append("date_creation", this.date_creation)
       payload.append("user_id", this.$store.state.user.id)
       axios

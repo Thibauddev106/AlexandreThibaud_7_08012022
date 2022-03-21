@@ -4,8 +4,8 @@ const mysql = require("mysql");
 // Constructeur
 const Comment = function(comment) {
     this.comment = comment.comment,
-    this.user_id = comment.user_id,
-    this.post_id = comment.post_id,
+    this.user_id = comment.user_id
+    this.post_id = comment.post_id
     this.date_creation = comment.date_creation
 };
 

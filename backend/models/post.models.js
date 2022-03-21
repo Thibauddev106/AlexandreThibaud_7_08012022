@@ -5,7 +5,7 @@ const mysql = require("mysql");
 const Article = function(article) {
     this.comment = article.comment,
     this.image = article.image,
-    // this.date_creation = article.date_creation,
+    this.date_creation = article.date_creation,
     this.user_id = article.user_id
 };
 

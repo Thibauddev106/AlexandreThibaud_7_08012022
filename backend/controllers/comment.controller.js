@@ -32,7 +32,7 @@ exports.createComment = (req, res) => {
 exports.findAllComments = (req, res) => {
     Comment.findAll(req.params.post_id)
     .then(comments => res.status(200).json(comments))
-    .catch(error => res.status(404).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };
 
 // Modifier un commentaire
@@ -41,19 +41,19 @@ exports.updateComment = (req, res) => {
     let comment = JSON.stringify(req.body.comment);
     Comment.updateOne(commentId, comment)
     .then(() => res.status(200).json({ message: "Commentaire modifié !"}))
-    .catch(error => res.status(404).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };
 
 // Supprimer un commentaire
 exports.deleteOneComment = (req, res) => {
     Comment.deleteOneId(req.params.id)
     .then(() => res.status(200).json({ message: "Commentaire effacé !"}))
-    .catch(error => res.status(404).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };
 
 // Trouver un commentaire par son id
 exports.findCommentById = (req, res) => {
     Comment.findById(req.params.id)
     .then(comment => res.status(200).json(comment))
-    .catch(error => res.status(404).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 };

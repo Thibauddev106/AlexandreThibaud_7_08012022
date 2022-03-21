@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4 w-75 mx-auto">
     <div class="card-header d-flex justify-content-between">
-      <div>Publier par <em class="text-secondary">{{post.pseudo}}</em> le <em class="text-secondary">{{publicationDate}}</em> </div>
+      <div>Publier par <em class="text-secondary">{{ post.pseudo }}</em> le <em class="text-secondary">{{ publicationDate }}</em> </div>
       <div class="dropdown"></div>
         <svg
             class="bi bi-three-dots dropdown-toggle"
@@ -45,30 +45,32 @@
         <p class="mb-0">{{post.comment}}</p>
       </div>  
     </div>
-    <Comment />
+    <CreateComment :post-id="post.id"/>
+    
   </div>
 </template>
 
 <script>
+
 import { mapState } from "vuex";
 import moment from "moment";
-import Comment from "../components/Comment.vue"
+
+import CreateComment from "../components/CreateComment.vue";
 
 export default {
   name: "Post",
   components: {
-    Comment
+    CreateComment
   },
   data() {
-    return {};
+    return {}
   },
-
   computed: {
     ...mapState(["user", "editOption"]),
-    publicationDate () {
+    publicationDate() {
       //console.log (this.post)
       if(this.post) {
-        return moment(this.post.date_creation).format('d/MM/yyyy') 
+        return moment(this.post.date_creation).format('D/MM/yyyy') 
       }
       return ""
     }
@@ -85,9 +87,9 @@ export default {
     },
     changeEditStyle(value) {
       this.$store.dispatch("changeEditStyle", value);
-    }
+    },
   }
-};
+}
 </script>
 
 <style>

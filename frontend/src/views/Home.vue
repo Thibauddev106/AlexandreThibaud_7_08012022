@@ -3,27 +3,21 @@
     <CreatePost />
     <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" @infosPost="setInfos" />
     <ModalBoxModerate :post="post" />
-    
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
 import CreatePost from "../components/CreatePost.vue";
 import Post from "../components/Post.vue";
 import ModalBoxModerate from "../components/ModifPost.vue";
-
-
 
 export default {
   name: "Home",
   components: {
     CreatePost,
     Post,
-    ModalBoxModerate,
-    
-    
+    ModalBoxModerate, 
   },
   data() {
     return {
@@ -31,11 +25,10 @@ export default {
         id: "",
         comment: "",
         image: "",
-        date_creation:""
-        
+        date_creation:"",
       },
-      allPosts: []
-    };
+      allPosts: [],
+    }
   },
   methods: {
     setInfos(payload) {
@@ -56,7 +49,8 @@ export default {
         .catch(error => {
           console.log(error); 
       })
-  }
+  },
+  
 };
 
 </script>
