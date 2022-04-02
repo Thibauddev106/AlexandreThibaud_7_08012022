@@ -3,7 +3,7 @@ const router = express.Router();
 
 const postCtrl = require("../controllers/post.controller");
 const auth = require("../middlewares/auth.middleware");
-const multer = require('../middlewares/multer-config');
+const multer = require("../middlewares/multer-config");
 
 // Création d'un article ok
 router.post("/createArticle", auth, multer, postCtrl.createArticle);
@@ -22,6 +22,5 @@ router.get("/article/:id", auth, postCtrl.getOneArticle);
 
 // Récupérer tous les articles d'un utilisateur ok
 router.get("/articles/user/:user_id", auth, postCtrl.getArticlesOfOneUser);
-
 
 module.exports = router;

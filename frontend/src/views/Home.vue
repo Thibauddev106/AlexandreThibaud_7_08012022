@@ -1,7 +1,12 @@
 <template>
   <div id="wall" class="wall">
     <CreatePost />
-    <Post v-for="post in allPosts" v-bind:key="post.id" :post="post" @infosPost="setInfos" />
+    <Post
+      v-for="post in allPosts"
+      v-bind:key="post.id"
+      :post="post"
+      @infosPost="setInfos"
+    />
     <ModalBoxModerate :post="post" />
   </div>
 </template>
@@ -17,7 +22,7 @@ export default {
   components: {
     CreatePost,
     Post,
-    ModalBoxModerate, 
+    ModalBoxModerate,
   },
   data() {
     return {
@@ -25,34 +30,31 @@ export default {
         id: "",
         comment: "",
         image: "",
-        date_creation:"",
+        date_creation: "",
       },
       allPosts: [],
-    }
+    };
   },
   methods: {
     setInfos(payload) {
       this.post = payload.post;
-    }
+    },
   },
   mounted() {
-    axios
-        .get("http://localhost:5000/api/post/articles", {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.user.token
-          }
-        })
-        .then(response => {
-          console.log("post", response.data);
-          this.allPosts = response.data.articles;
-        })
-        .catch(error => {
-          console.log(error); 
-      })
+    axios.get("http://localhost:5000/api/post/articles", {
+      headers: {
+        Authorization: "Bearer " + this.$store.state.user.token,
+      },
+    })
+    .then((response) => {
+      console.log("post", response.data);
+      this.allPosts = response.data.articles;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   },
-  
 };
-
 </script>
 
 <style lang="scss">
@@ -74,6 +76,5 @@ export default {
     margin: 0.25rem 0;
     font-size: 0.75rem;
   }
-  
 }
 </style>

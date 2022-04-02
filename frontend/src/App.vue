@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container-fluid">
     <NavLink />
-      <router-view />
+    <router-view />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import NavLink from "./components/NavLink.vue";
 export default {
   components: {
-    NavLink
+    NavLink,
   },
 };
 </script>

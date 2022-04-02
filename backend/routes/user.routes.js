@@ -12,7 +12,7 @@ router.post("/register", validatePassword, userCtrl.register);
 router.post("/login", userCtrl.login);
 
 // Connection de l'utilisateur en cours de login pour vérifier la validité du token et récupérer ses données
-router.get('/me',auth, userCtrl.getMyDatas);
+router.get("/me", auth, userCtrl.getMyDatas);
 
 // Déconnexion de l'utilisateur ok
 router.post("/logout", auth, userCtrl.logout);
@@ -29,6 +29,7 @@ router.put("/update/:userId", auth, userCtrl.updateUser);
 //Effacer un utilisateur (admin) ok
 router.delete("/delete/:userId", auth, userCtrl.deleteUser);
 
-
+// Trouver le pseudo du createur du commentaire
+router.get("/pseudo/:user_id", auth, userCtrl.findPseudoById);
 
 module.exports = router;

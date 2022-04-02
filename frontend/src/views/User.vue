@@ -2,9 +2,7 @@
   <main class="main">
     <div class="row p-2">
       <div class="col-12">
-        <h1>
-          <i class="fas fa-cog"></i>Paramètres 
-        </h1>
+        <h1><i class="fas fa-cog"></i>Paramètres</h1>
         <hr />
       </div>
     </div>
@@ -16,21 +14,23 @@
         <div class="user-info__block">
           <p class="user-info__block__title mb-0">Email</p>
           <p class="user-info__block__output">
-            <small>{{user.email}}</small>
+            <small>{{ user.email }}</small>
           </p>
         </div>
         <div class="user-info__block">
           <p class="user-info__block__title mb-0">Pseudo</p>
           <p class="user-info__block__output">
-            <small>{{user.pseudo}}</small>
+            <small>{{ user.pseudo }}</small>
           </p>
         </div>
-        <div class="user-info__block d-sm-flex justify-content-between user-info__block--flex">
+        <div
+          class="user-info__block d-sm-flex justify-content-between user-info__block--flex"
+        >
           <div class="user-info__block">
             <p class="user-info__block__title mb-0">Password</p>
             <small class="user-info__block__output">
-              Doit contenir au minimum 8 caractères dont une majuscule, <br/>
-              et au minimum un caractère numérique  et un caractère spécial
+              Doit contenir au minimum 8 caractères dont une majuscule, <br />
+              et au minimum un caractère numérique et un caractère spécial
             </small>
           </div>
           <button
@@ -39,7 +39,9 @@
             data-toggle="modal"
             data-target="#BoxModalChgPwd"
             @click="testInputs"
-          >Modifier</button>
+          >
+            Modifier
+          </button>
           <!--Box Modal pour changement PWD-->
           <div
             class="modal fade"
@@ -52,28 +54,40 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="BoxModalChgPwd__title">Change Password</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <h5 class="modal-title" id="BoxModalChgPwd__title">
+                    Change Password
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
                   <form>
                     <div class="form-group">
-                      <label for="InputNewPassword">Entrez un nouveau password</label>
+                      <label for="InputNewPassword"
+                        >Entrez un nouveau password
+                      </label>
                       <input
                         type="password"
                         class="form-control"
                         id="InputNewPassword"
                         v-model="changePwd.password"
                       />
-                      <small
-                        id="emailHelp"
-                        class="form-text text-muted"
-                      >Au minimum 8 caractères dont une majuscule, un minuscule, un caractère numérique et un caractère spécial</small>
+                      <small id="emailHelp" class="form-text text-muted"
+                        >Au minimum 8 caractères dont une majuscule, un
+                        minuscule, un caractère numérique et un caractère
+                        spécial</small
+                      >
                     </div>
                     <div class="form-group">
-                      <label for="RepeatInputNewPassword">Répétez votre nouveau password</label>
+                      <label for="RepeatInputNewPassword"
+                        >Répétez votre nouveau password</label
+                      >
                       <input
                         type="password"
                         class="form-control"
@@ -84,10 +98,22 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                  <button type="button" class="btn btn-primary" @click="changePassword">Sauvgarder</button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Fermer
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="changePassword"
+                  >
+                    Sauvgarder
+                  </button>
                 </div>
-                <p id="retour-api" class="text-center">{{retourAPI}}</p>
+                <p id="retour-api" class="text-center">{{ retourAPI }}</p>
               </div>
             </div>
           </div>
@@ -97,7 +123,9 @@
           type="button"
           class="btn btn-danger white d-block mx-auto mt-5 mb-2"
           @click="deleteAccount"
-        >Supprimer compte</button>
+        >
+          Supprimer compte
+        </button>
       </div>
     </section>
   </main>
@@ -114,32 +142,30 @@ export default {
       retourAPI: "",
       changePwd: {
         password: null,
-        RepeatPassword: null},
-      
+        RepeatPassword: null,
+      },
       pseudo: this.$store.state.user.pseudo,
       email: this.$store.state.user.email,
       image: this.$store.state.user.image,
       is_admin: this.$store.state.user.is_admin,
-      
     };
   },
   computed: {
     ...mapState(["user"]),
-    
   },
   methods: {
     deleteAccount() {
       axios
         .delete(`http://localhost:5000/api/user/delete/${this.$store.state.user.id}`, {
-          headers: {
-            Authorization: "Bearer " + this.$store.state.user.token
-          }
-        })
+            headers: {
+              Authorization: "Bearer " + this.$store.state.user.token,
+            },
+          })
         .then(() => {
           localStorage.clear();
-          this.$router.push('/')
+          this.$router.push("/");
         })
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
     },
     changePassword() {
       //Controle de la saisie du nouveau password
@@ -149,25 +175,22 @@ export default {
         this.changePwd.password != "" &&
         this.changePwd.RepeatPassword != ""
       ) {
-        axios
-          .put(
-            `http://localhost:5000/api/user/update/${this.$store.state.user.id}`,
+        axios.put(`http://localhost:5000/api/user/update/${this.$store.state.user.id}`,
             {
               password: this.changePwd.password,
               pseudo: this.pseudo,
               email: this.email,
               image: this.image,
               is_admin: this.is_admin,
-              token: this.token
-              
+              token: this.token,
             },
             {
               headers: {
-                Authorization: "Bearer " + this.$store.state.user.token
-              }
+                Authorization: "Bearer " + this.$store.state.user.token,
+              },
             }
           )
-          .then(response => {
+          .then((response) => {
             console.log("pwd change", response);
             document.getElementById("retour-api").classList.add("text-success");
             this.retourAPI = response.data.confirmation;
@@ -176,7 +199,7 @@ export default {
               window.location.reload();
             }, 2000);
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             this.retourAPI = "Une erreur est survenue, vérifier vos saisies";
           });
@@ -190,7 +213,7 @@ export default {
       const regexPassword = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
       let inputNewPwd = document.getElementById("InputNewPassword");
       let inputRepeatNewPwd = document.getElementById("RepeatInputNewPassword");
-      inputNewPwd.addEventListener("input", function(e) {
+      inputNewPwd.addEventListener("input", function (e) {
         let value = e.target.value;
         let testValue = regexPassword.test(value);
         if (testValue) {
@@ -199,7 +222,7 @@ export default {
           inputNewPwd.style.backgroundColor = "#f44336";
         }
       });
-      inputRepeatNewPwd.addEventListener("input", function() {
+      inputRepeatNewPwd.addEventListener("input", function () {
         if (
           inputRepeatNewPwd.value == inputNewPwd.value &&
           regexPassword.test(inputRepeatNewPwd.value)
@@ -209,11 +232,9 @@ export default {
           inputRepeatNewPwd.style.backgroundColor = "#f44336";
         }
       });
-    }
+    },
   },
-  
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
